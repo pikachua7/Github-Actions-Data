@@ -37,8 +37,7 @@ jobs:
         with:
           name: dist-files
           path: | #storing artifacts in path
-            dist   
-            package.json
+            dist
 
   deploy:
     needs: build
