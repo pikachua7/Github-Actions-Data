@@ -53,6 +53,6 @@ jobs:
       - name: Output contents
         run: ls
       - name: Output filename
-        run: echo "${{needs.build.outputs.script-file}}" #accessing file name from other job
+        run: echo "${{needs.build.outputs}}" #accessing file name from other job
       - name: Deploy
         run: echo "Deploying..."
