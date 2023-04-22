@@ -9,6 +9,13 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+        #Caching is used so that we don't have to install dependencies multiple times
+        #in seperate jobs, as it increases our workflow run time
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm #if this folder exist then npm ci checks this, if it doesn't then npm ci runs
+          key: deps-node-modules-${{hashFiles('**/package-lock.json')}} #we are hashing package-lock file because if any package is changed then it is reflected in package-lock and so the hash of the file will change, this will tell github actions to delete the cache and install dependencies again
       - name: Install dependencies
         run: npm ci
       - name: Lint code
@@ -23,6 +30,11 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm #build job will use the same cache as it is alloted centrally
+          key: deps-node-modules-${{hashFiles('**/package-lock.json')}}
       - name: Install dependencies
         run: npm ci
       - name: Build website
