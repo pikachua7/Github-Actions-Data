@@ -19,7 +19,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     outputs:
-      script-file: ${{steps.publish.outputs.script-file}} #after output that name will come which we want to publish
+      script-file: ${{steps.publish.outputs.script_file}} #after output that name will come which we want to publish
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -53,6 +53,6 @@ jobs:
       - name: Output contents
         run: ls
       - name: Output filename
-        run: echo "${{needs.build.outputs}}" #accessing file name from other job
+        run: echo "${{needs.build.outputs.script-file}}" #accessing file name from other job
       - name: Deploy
         run: echo "Deploying..."
