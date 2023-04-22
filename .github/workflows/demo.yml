@@ -29,15 +29,17 @@ jobs:
         run: npm run build
       - name: Publish JS Filename #getting JS file name generated in build step so that we can use that in deploy job
         id: publish #to differentiate this step from other steps we give it a ID
-        run: find dist/assets/*.js -type f -execdir echo 'script_file={}' >> GITHUB_OUTPUT ';' #we are storing output in script_file variable
+        run: find dist/assets/*.js -type f -execdir echo 'script_file={}' >> $GITHUB_OUTPUT ';' #we are storing output in script_file variable
         # find dist/assets/*.js -type f -execdir echo '{}' ';' THIS IS LINUX COMMAND FOR DISPLAYING FILE NAME
         #artifacts
       - name: Uploading artifacts
         uses: actions/upload-artifact@v3
         with:
           name: dist-files
-          path: | #storing artifacts in path
-            dist
+          path: dist
+          # path: | #storing artifacts in path
+          #   dist
+          #   package.json
 
   deploy:
     needs: build
